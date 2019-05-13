@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.entities.Company;
 import com.example.demo.entities.User;
+import com.example.demo.exceptions.*;
 import com.example.demo.services.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -54,7 +56,10 @@ public class UsersController{
             .body(user);
     }
 
-    @ApiResponse(code = 200, message = "OK", response = Long.class)
+    @ApiResponses(value = {
+                @ApiResponse(code = 200, message = "OK", response = Long.class),
+                @ApiResponse(code = 400, message = "If invalid User provided")
+            })
     @ApiOperation(value = "Add a new user")
     @PostMapping("api/user")
     public ResponseEntity<Long> createNewUser(@RequestBody User newUser){
@@ -69,8 +74,9 @@ public class UsersController{
                 @ApiResponse(code = 404, message = "If provided user name not exists")
             })
     @PutMapping("api/user/{userName}/company")
-    public ResponseEntity<?> addCompanyToUser(@PathVariable String userName, 
-                                            @RequestBody Company company){
+    public ResponseEntity<?> addCompanyToUser(
+                                            @ApiParam("Valid user user name") @PathVariable String userName, 
+                                            @ApiParam("Valid company object") @RequestBody Company company) {
         usersService.addCompanyToUser(userName, company);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
