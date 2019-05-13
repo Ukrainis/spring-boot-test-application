@@ -68,7 +68,8 @@ public class UsersController{
                 @ApiResponse(code = 400, message = "If invalid company provided"),
                 @ApiResponse(code = 404, message = "If provided user name not exists")
             })
-    public ResponseEntity addCompanyToUser(@PathVariable String userName, 
+    @PutMapping("api/user/{userName}/company")
+    public ResponseEntity<?> addCompanyToUser(@PathVariable String userName, 
                                             @RequestBody Company company){
         usersService.addCompanyToUser(userName, company);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
