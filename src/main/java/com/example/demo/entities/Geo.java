@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +20,7 @@ public class Geo{
 
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "addressId", nullable = false)
+    @JsonBackReference
     private Address address;
 
     private String lat;

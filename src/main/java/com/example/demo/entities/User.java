@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
@@ -34,6 +33,7 @@ public class User{
     @OneToOne(mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Address address;
 
     @Column(name = "phone", nullable = false)

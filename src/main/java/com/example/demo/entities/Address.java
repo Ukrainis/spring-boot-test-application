@@ -8,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
@@ -15,10 +19,12 @@ import lombok.Data;
 @Table(name = "addresses")
 public class Address{
     @Id    
+    @JsonIgnore
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "userId", nullable = false)
+    @JsonBackReference
     private User user;
 
     private String street;
@@ -32,6 +38,7 @@ public class Address{
     @OneToOne(mappedBy = "address",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Geo geo;
 
     public Address (String street, String suite, String city, String zipCode){

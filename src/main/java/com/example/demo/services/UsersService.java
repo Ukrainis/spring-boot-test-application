@@ -65,6 +65,8 @@ public class UsersService {
 
         user.setAddress(address);
         user.getAddress().setUser(user);
+
+        userRepo.save(user);
     }
 
     public void addCompanyToUser(String userName, Company company) {
