@@ -42,4 +42,12 @@ public class CustomExceptionsAdvice {
         String error = ex.getMessage();
         return new CustomExceptionResponse(error);
     }
+
+    @ExceptionHandler(DublicateUserNameException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse dublicatedUserNameHandler(DublicateUserNameException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(error);
+    }
 }

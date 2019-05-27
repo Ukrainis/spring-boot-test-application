@@ -47,6 +47,9 @@ public class UsersService {
             throw new InvalidUserDataException();
         }
 
+        String userName = user.getUserName();
+        userRepo.findByUserName(user.getUserName()).orElseThrow(() -> new DublicateUserNameException(userName));
+
         return userRepo.save(user).getId();
     }
 
