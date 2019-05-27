@@ -48,7 +48,9 @@ public class UsersService {
         }
 
         String userName = user.getUserName();
-        userRepo.findByUserName(user.getUserName()).orElseThrow(() -> new DublicateUserNameException(userName));
+        if(userRepo.findByUserName(userName).isPresent()) {
+            throw new DublicateUserNameException(userName);
+        }
 
         return userRepo.save(user).getId();
     }

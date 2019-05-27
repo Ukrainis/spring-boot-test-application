@@ -10,3 +10,4 @@ public class CustomExceptionResponse {
 		this.error = error;
 	}
 }
+//TODO Add one more field and parameter into constructor - Exception type

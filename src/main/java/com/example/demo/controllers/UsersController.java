@@ -54,11 +54,13 @@ public class UsersController {
     }
 
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Long.class),
-            @ApiResponse(code = 400, message = "If invalid User provided") })
+            @ApiResponse(code = 400, message = "If invalid User provided"),
+            @ApiResponse(code = 400, message = "If user with this username already exists")})
     @ApiOperation(value = "Add a new user")
     @PostMapping("api/user")
     public ResponseEntity<Long> createNewUser(@RequestBody User newUser) {
-        return ResponseEntity.status(HttpStatus.OK).body(usersService.addNewUser(newUser));
+        Long id = usersService.addNewUser(newUser);
+        return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
     @ApiOperation(value = "Add address to an existing user")

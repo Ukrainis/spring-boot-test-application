@@ -17,7 +17,7 @@ public class CustomExceptionsAdvice {
     public CustomExceptionResponse invalidUserHandler(InvalidUserDataException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(error);
-    }
+    }//TODO Send type of exception into CustomExceptionResponse, Enum or connstants use for saving names?
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
