@@ -8,15 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
+@XmlRootElement
 @Entity
 @Table(name = "users")
 @Data
-public class User{
+public class User {
     @Id
     @GeneratedValue
     private long id;
@@ -30,9 +32,7 @@ public class User{
     @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "user",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Address address;
 
@@ -41,15 +41,12 @@ public class User{
 
     @Column(name = "website", nullable = false)
     private String website;
-    
-    @OneToOne(mappedBy = "user",
-                fetch = FetchType.LAZY,
-                cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Company company;
 
-    public User(String name, String userName, String email, 
-                String phone, String website){
+    public User(String name, String userName, String email, String phone, String website) {
         this.name = name;
         this.userName = userName;
         this.email = email;
@@ -57,5 +54,6 @@ public class User{
         this.website = website;
     }
 
-    public User(){}
+    public User() {
+    }
 }

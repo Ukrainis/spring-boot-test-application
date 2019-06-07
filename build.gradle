@@ -6,6 +6,7 @@ plugins {
 ext {
     lombokVersion = '1.18.8'
 	swaggerVersion = '2.9.2'
+	xmlSupportVersion = '2.9.9'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -28,6 +29,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile "io.springfox:springfox-swagger2:${swaggerVersion}"
 	compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+	compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${xmlSupportVersion}"
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
