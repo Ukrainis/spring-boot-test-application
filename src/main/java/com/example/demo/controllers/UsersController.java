@@ -63,7 +63,7 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
-    @ApiOperation(value = "Add address to an existing user")
+    @ApiOperation(value = "Add or update address to an existing user")
     @ApiResponses(value = { @ApiResponse(code = 204, message = "If valid address and valid user"),
             @ApiResponse(code = 400, message = "If invalid address provided"),
             @ApiResponse(code = 404, message = "If provided user name not exists") })
@@ -74,7 +74,7 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @ApiOperation(value = "Add a Company to an existing user")
+    @ApiOperation(value = "Add or update a Company to an existing user")
     @ApiResponses(value = { @ApiResponse(code = 204, message = "If valid company and valid user"),
             @ApiResponse(code = 400, message = "If invalid company provided"),
             @ApiResponse(code = 404, message = "If provided user name not exists") })

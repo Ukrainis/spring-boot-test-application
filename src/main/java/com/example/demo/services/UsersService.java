@@ -85,8 +85,12 @@ public class UsersService {
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
-        user.setCompany(company);
-        user.getCompany().setUser(user);
+        if(user.getCompany() == null){
+            user.setCompany(company);
+            user.getCompany().setUser(user);
+        } else{
+            user = companyService.updateUserCompany(user, company);
+        }
 
         userRepo.save(user);
     }
