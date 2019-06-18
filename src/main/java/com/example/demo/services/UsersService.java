@@ -68,8 +68,12 @@ public class UsersService {
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
-        user.setAddress(address);
-        user.getAddress().setUser(user);
+        if(user.getAddress() == null){
+            user.setAddress(address);
+            user.getAddress().setUser(user);
+        } else{
+            user = addressService.updateUserAddress(user, address);
+        }              
 
         userRepo.save(user);
     }
