@@ -1,5 +1,7 @@
 package com.example.demo.exceptions;
 
+import com.example.demo.enums.Exceptions;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,15 +18,15 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse invalidUserHandler(InvalidUserDataException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(error);
-    }//TODO Send type of exception into CustomExceptionResponse, Enum or connstants use for saving names?
+        return new CustomExceptionResponse(Exceptions.InvalidUserDataException, error);
+    }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public CustomExceptionResponse userNotFoundHandler(UserNotFoundException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(error);
+        return new CustomExceptionResponse(Exceptions.UserNotFoundException, error);
     }
 
     @ExceptionHandler(InvalidCompanyDataException.class)
@@ -32,7 +34,7 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse invalidCompanyHandler(InvalidCompanyDataException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(error);
+        return new CustomExceptionResponse(Exceptions.InvalidCompanyDataException, error);
     }
 
     @ExceptionHandler(InvalidAddressDataException.class)
@@ -40,7 +42,7 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse invalidAddressHandler(InvalidAddressDataException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(error);
+        return new CustomExceptionResponse(Exceptions.InvalidAddressDataException, error);
     }
 
     @ExceptionHandler(DublicateUserNameException.class)
@@ -48,6 +50,6 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse dublicatedUserNameHandler(DublicateUserNameException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(error);
+        return new CustomExceptionResponse(Exceptions.DublicateUserNameException, error);
     }
 }

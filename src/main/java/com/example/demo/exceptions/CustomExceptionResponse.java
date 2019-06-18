@@ -1,13 +1,17 @@
 package com.example.demo.exceptions;
 
+import com.example.demo.enums.Exceptions;
+
 import lombok.Data;
 
 @Data
 public class CustomExceptionResponse {
-	private String error;
-	
-	public CustomExceptionResponse(String error) {
-		this.error = error;
+	private Exceptions exception;
+
+	private String message;
+
+	public CustomExceptionResponse(Exceptions exception, String message) {
+		this.exception = exception;
+		this.message = message;
 	}
 }
-//TODO Add one more field and parameter into constructor - Exception type
