@@ -2,9 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.List;
 
-import com.example.demo.entities.Address;
-import com.example.demo.entities.Company;
-import com.example.demo.entities.User;
+import com.example.demo.entities.*;
 import com.example.demo.services.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +72,18 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @ApiOperation(value = "Add or update Geo for an existing user")
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "If existing user, existing address, valid user"),
+            @ApiResponse(code = 400, message = "If invalid Geo coordinates are provided"),
+            @ApiResponse(code = 404, message = "If user with provided username does not exists"),
+            @ApiResponse(code = 400, message = "If no defined address for provided user")})
+    @PutMapping("api/user/{userName}/address/geo")
+    public ResponseEntity<?> setGeoCoordinatesForUser(@ApiParam("Valid user username") @PathVariable String userName,
+            @ApiParam("Valid Geo object") @RequestBody Geo geo) {
+        usersService.addGeoToUserAddress(userName, geo);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @ApiOperation(value = "Add or update a Company to an existing user")
     @ApiResponses(value = { @ApiResponse(code = 204, message = "If valid company and valid user"),
             @ApiResponse(code = 400, message = "If invalid company provided"),
@@ -84,6 +94,16 @@ public class UsersController {
         usersService.addCompanyToUser(userName, company);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    
+
+    @ApiOperation(value = "Assign todo to user")
+    @PutMapping("api/user/{userName}/todo/{todoId}")
+    public ResponseEntity<?> assignTodoToUser(@PathVariable String userName, @PathVariable Long todoId) {
+        usersService.assignTodoToUser(userName, todoId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
     @ApiOperation(value = "Delete existing user")
     @DeleteMapping("api/user/{userName}")

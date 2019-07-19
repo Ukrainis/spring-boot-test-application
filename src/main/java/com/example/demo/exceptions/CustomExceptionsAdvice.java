@@ -45,11 +45,43 @@ public class CustomExceptionsAdvice {
         return new CustomExceptionResponse(Exceptions.InvalidAddressDataException, error);
     }
 
+    @ExceptionHandler(MissingAddressException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse missingAddressHandler(MissingAddressException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.MissingAddressException, error);
+    }
+
+    @ExceptionHandler(InvaliGeoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse invalidGeoHandler(InvaliGeoException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidGeoDataException, error);
+    }
+
     @ExceptionHandler(DublicateUserNameException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public CustomExceptionResponse dublicatedUserNameHandler(DublicateUserNameException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.DublicateUserNameException, error);
+    }
+
+    @ExceptionHandler(InvalidTodoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse invalidTodoHandler(InvalidTodoException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidTodoException, error);
+    }
+
+    @ExceptionHandler(TodoNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse missingTodoEntityHandler(TodoNotFoundException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.TodoNotFoundException, error);
     }
 }

@@ -2,11 +2,10 @@ package com.example.demo.services;
 
 import java.util.List;
 
-import com.example.demo.entities.Address;
-import com.example.demo.entities.Company;
-import com.example.demo.entities.User;
+import com.example.demo.entities.*;
 import com.example.demo.exceptions.*;
 import com.example.demo.helpers.*;
+import com.example.demo.repositories.TodoRepository;
 import com.example.demo.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,18 @@ public class UsersService {
 
     private final UserRepository userRepo;
     private final AddressService addressService;
+    private final GeoService geoService;
     private final CompanyService companyService;
+    private final TodoRepository todoRepo;
 
     @Autowired
-    public UsersService(UserRepository userRepository, CompanyService companyService, AddressService addressService) {
-        userRepo = userRepository;
+    public UsersService(UserRepository userRepository, CompanyService companyService, 
+                        AddressService addressService, GeoService geoService, TodoRepository todoRepo) {
+        this.userRepo = userRepository;
         this.addressService = addressService;
+        this.geoService=geoService;
         this.companyService = companyService;
+        this.todoRepo = todoRepo;
     }
 
     public List<User> returnAllUsers() {
@@ -78,6 +82,25 @@ public class UsersService {
         userRepo.save(user);
     }
 
+    public void addGeoToUserAddress(String userName, Geo geo) {
+        if (geoService.isGeoInvalid(geo)) {
+            throw new InvaliGeoException();
+        }
+
+        User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
+
+        if(user.getAddress() == null) {
+            throw new MissingAddressException(userName);
+        } else if (user.getAddress().getGeo() == null) {
+            geo.setAddress(user.getAddress());
+            user.getAddress().setGeo(geo);
+        } else {
+            geoService.updateGeoForUserAddress(user, geo);
+        }
+
+        userRepo.save(user);
+    }
+
     public void addCompanyToUser(String userName, Company company) {
         if (companyService.isCompanyInvalid(company)) {
             throw new InvalidCompanyDataException();
@@ -93,6 +116,14 @@ public class UsersService {
         }
 
         userRepo.save(user);
+    }
+
+    public void assignTodoToUser(String userName, Long todoId) {
+        User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
+        Todo todo = todoRepo.findById(todoId).orElseThrow(() -> new TodoNotFoundException(todoId));
+
+        todo.setUserId(user.getId());
+        todoRepo.save(todo);
     }
 
     private boolean isUserInvalid(User user) {
