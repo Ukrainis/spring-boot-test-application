@@ -1,7 +1,7 @@
 # Overview
 
 This is a Spring Boot application which was created as experiment application for API Test automation trainingg.  
-It's base url is: <https://spring-boot-test-application.herokuapp.com/>  
+It's base url is: <https://spring-boot-test-aplication.herokuapp.com/>  
 Currently next api's present in this application:  
 
 1. `/api/users` - `GET` request to get all users data, which currently present in DB.
