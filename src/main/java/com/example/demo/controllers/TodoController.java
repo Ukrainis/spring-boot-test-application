@@ -26,7 +26,7 @@ public class TodoController {
     }
 
     @ApiOperation(value = "Return all todo's")
-    @GetMapping("api/todos")
+    @GetMapping(path = "api/todos", produces = {"application/json", "application/xml"})
     public ResponseEntity<List<Todo>> getAllTodos() {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos());
     }

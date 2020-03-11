@@ -32,20 +32,20 @@ public class UsersController {
     }
 
     @ApiOperation(value = "Return all existing users")
-    @GetMapping("api/users")
+    @GetMapping(path = "api/users", produces = {"application/json", "application/xml"})
     public ResponseEntity<List<User>> returnUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(usersService.returnAllUsers());
     }
 
     @ApiOperation(value = "Return user by it's ID")
-    @GetMapping("api/users/findById/{id}")
+    @GetMapping(path = "api/users/findById/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<User> returnUser(@PathVariable Long id) {
         User user = usersService.returnUserById(id);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @ApiOperation(value = "Return user by it's UserName")
-    @GetMapping("api/users/findByUserName/{userName}")
+    @GetMapping(path = "api/users/findByUserName/{userName}", produces = {"application/json", "application/xml"})
     public ResponseEntity<User> returnUserByUserName(@PathVariable String userName) {
         User user = usersService.returnUserByUserName(userName);
         return ResponseEntity.status(HttpStatus.OK).body(user);
