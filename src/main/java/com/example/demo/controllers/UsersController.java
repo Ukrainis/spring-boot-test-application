@@ -3,6 +3,8 @@ package com.example.demo.controllers;
 import java.util.List;
 
 import com.example.demo.entities.*;
+import com.example.demo.requests.CreateUserRequest;
+import com.example.demo.responses.CreateUserResponse;
 import com.example.demo.services.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +53,14 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Long.class),
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "User is created", response = CreateUserResponse.class),
             @ApiResponse(code = 400, message = "If invalid User provided"),
             @ApiResponse(code = 400, message = "If user with this username already exists")})
     @ApiOperation(value = "Add a new user")
-    @PostMapping("api/user")
-    public ResponseEntity<Long> createNewUser(@RequestBody User newUser) {
-        Long id = usersService.addNewUser(newUser);
-        return ResponseEntity.status(HttpStatus.OK).body(id);
+    @PostMapping(path = "api/user", consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
+    public ResponseEntity<CreateUserResponse> createNewUser(@ApiParam("Valid user data") @RequestBody CreateUserRequest newUser) {
+        CreateUserResponse response = usersService.addNewUser(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @ApiOperation(value = "Add or update address to an existing user")
@@ -95,15 +97,12 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    
-
     @ApiOperation(value = "Assign todo to user")
     @PutMapping("api/user/{userName}/todo/{todoId}")
     public ResponseEntity<?> assignTodoToUser(@PathVariable String userName, @PathVariable Long todoId) {
         usersService.assignTodoToUser(userName, todoId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
     @ApiOperation(value = "Delete existing user")
     @DeleteMapping("api/user/{userName}")

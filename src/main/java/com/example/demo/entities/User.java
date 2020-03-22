@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.example.demo.requests.CreateUserRequest;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -46,12 +47,12 @@ public class User {
     @JsonManagedReference
     private Company company;
 
-    public User(String name, String userName, String email, String phone, String website) {
-        this.name = name;
-        this.userName = userName;
-        this.email = email;
-        this.phone = phone;
-        this.website = website;
+    public User(CreateUserRequest request) {
+        this.name = request.getName();
+        this.userName = request.getUserName();
+        this.email = request.getEmail();
+        this.phone = request.getPhone();
+        this.website = request.getWebsite();
     }
 
     public User() {

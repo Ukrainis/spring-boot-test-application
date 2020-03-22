@@ -84,4 +84,20 @@ public class CustomExceptionsAdvice {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.TodoNotFoundException, error);
     }
+
+    @ExceptionHandler(InvalidTodoStatusException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse invalidTodoStatusHandler(InvalidTodoStatusException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidTodoStatusException, error);
+    }
+
+    @ExceptionHandler(TodoIsNotAssignedException.class)
+    @ResponseStatus(HttpStatus.FAILED_DEPENDENCY)
+    @ResponseBody
+    public CustomExceptionResponse invalidTodoStatus(TodoIsNotAssignedException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidTodoStatusException, error);
+    }
 }

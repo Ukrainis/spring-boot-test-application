@@ -9,5 +9,7 @@ public enum Exceptions {
     InvalidUserDataException,
     UserNotFoundException,
     InvalidTodoException,
-    TodoNotFoundException;
+    TodoNotFoundException,
+    InvalidTodoStatusException,
+    TodoIsNotAssignedException;
 }

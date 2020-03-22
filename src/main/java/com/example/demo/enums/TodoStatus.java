@@ -1,5 +1,11 @@
 package com.example.demo.enums;
 
 public enum TodoStatus {
-    TODO, IN_PROGRESS, DONE;
+    TODO("Todo"), IN_PROGRESS("In progress"), DONE("Done");
+
+    public final String status;
+
+    private TodoStatus(String status) {
+        this.status = status;
+    }
 }

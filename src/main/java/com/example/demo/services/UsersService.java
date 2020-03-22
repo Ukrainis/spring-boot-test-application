@@ -7,6 +7,8 @@ import com.example.demo.exceptions.*;
 import com.example.demo.helpers.*;
 import com.example.demo.repositories.TodoRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.requests.CreateUserRequest;
+import com.example.demo.responses.CreateUserResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,17 +48,23 @@ public class UsersService {
         return user;
     }
 
-    public Long addNewUser(User user) {
-        if (isUserInvalid(user)) {
+    public CreateUserResponse addNewUser(CreateUserRequest request) {
+        if (isUserInvalid(request)) {
             throw new InvalidUserDataException();
         }
 
-        String userName = user.getUserName();
+        String userName = request.getUserName();
         if(userRepo.findByUserName(userName).isPresent()) {
             throw new DublicateUserNameException(userName);
         }
 
-        return userRepo.save(user).getId();
+        User user = new User(request);
+
+        User newUser = userRepo.save(user);
+        
+        CreateUserResponse response = new CreateUserResponse(newUser);
+
+        return response;
     }
 
     public void removeUserByUseName(String userName) {
@@ -126,7 +134,7 @@ public class UsersService {
         todoRepo.save(todo);
     }
 
-    private boolean isUserInvalid(User user) {
+    private boolean isUserInvalid(CreateUserRequest user) {
         return (Utils.isEmpty(user.getName()) || Utils.isEmpty(user.getUserName()) || Utils.isEmpty(user.getEmail())
                 || Utils.isEmpty(user.getPhone()) || Utils.isEmpty(user.getWebsite()));
     }
