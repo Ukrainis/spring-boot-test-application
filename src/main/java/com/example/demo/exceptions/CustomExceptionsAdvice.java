@@ -96,8 +96,16 @@ public class CustomExceptionsAdvice {
     @ExceptionHandler(TodoIsNotAssignedException.class)
     @ResponseStatus(HttpStatus.FAILED_DEPENDENCY)
     @ResponseBody
-    public CustomExceptionResponse invalidTodoStatus(TodoIsNotAssignedException ex) {
+    public CustomExceptionResponse invalidTodoStatusHandler(TodoIsNotAssignedException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.InvalidTodoStatusException, error);
+    }
+
+    @ExceptionHandler(WrongTodoStatusException.class)
+    @ResponseStatus(HttpStatus.FAILED_DEPENDENCY)
+    @ResponseBody
+    public CustomExceptionResponse wrongTodoStatusHandler(WrongTodoStatusException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.WrongTodoStatusException, error);
     }
 }

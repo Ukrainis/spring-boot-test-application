@@ -36,7 +36,7 @@ public class TodoService {
 
     public void changeTodoStatus(Long todoId, TodoStatusChangeRequest newStatus) {
         String status = newStatus.getStatus();
-        if (!status.equals(TodoStatus.IN_PROGRESS.status) || !status.equals(TodoStatus.DONE.status)) {
+        if (Utils.isEmpty(status) || (!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status))) {
             throw new InvalidTodoStatusException(status);
         }
 
@@ -46,8 +46,23 @@ public class TodoService {
             throw new TodoIsNotAssignedException();
         }
 
-        if ((todo.getStatus().status == TodoStatus.TODO.status) && status == TodoStatus.DONE.status) {
+        if ((todo.getStatus().status.equals(TodoStatus.TODO.status)) && status.equals(TodoStatus.DONE.status)) {
+            throw new WrongTodoStatusException("TODO in Todo status can't be changed to Done status without moving to In progress status");
+        }
 
+        if ((todo.getStatus().status.equals(TodoStatus.DONE.status)) && 
+            (status.equals(TodoStatus.TODO.status) || status.equals(TodoStatus.IN_PROGRESS.status))) {
+            throw new WrongTodoStatusException("TODO in Done status can't be changed to Todo status or back in to In progress status");
+        }
+
+        if ((todo.getStatus().status.equals(TodoStatus.TODO.status)) && status.equals(TodoStatus.IN_PROGRESS.status)) {
+            todo.setStatus(TodoStatus.IN_PROGRESS);
+            todoRepository.save(todo);
+        }
+
+        if ((todo.getStatus().status.equals(TodoStatus.IN_PROGRESS.status)) && status.equals(TodoStatus.DONE.status)) {
+            todo.setStatus(TodoStatus.DONE);
+            todoRepository.save(todo);
         }
     }
 
