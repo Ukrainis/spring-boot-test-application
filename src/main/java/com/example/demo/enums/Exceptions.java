@@ -12,5 +12,6 @@ public enum Exceptions {
     TodoNotFoundException,
     InvalidTodoStatusException,
     TodoIsNotAssignedException,
-    WrongTodoStatusException;
+    WrongTodoStatusException,
+    NotCompletedUserDataException;
 }

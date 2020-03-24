@@ -3,25 +3,15 @@ package com.example.demo.controllers;
 import java.util.List;
 
 import com.example.demo.entities.*;
-import com.example.demo.requests.CreateUserRequest;
-import com.example.demo.responses.CreateUserResponse;
-import com.example.demo.services.UsersService;
+import com.example.demo.requests.*;
+import com.example.demo.responses.*;
+import com.example.demo.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 
 @RestController
 public class UsersController {
@@ -69,7 +59,7 @@ public class UsersController {
             @ApiResponse(code = 404, message = "If provided user name not exists") })
     @PutMapping("api/user/{userName}/address")
     public ResponseEntity<?> addAddressToUser(@ApiParam("Valid user user name") @PathVariable String userName,
-            @ApiParam("Valid address object") @RequestBody Address address) {
+            @ApiParam("Valid address object") @RequestBody AddAddressRequest address) {
         usersService.addAddressToUser(userName, address);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -81,7 +71,7 @@ public class UsersController {
             @ApiResponse(code = 400, message = "If no defined address for provided user")})
     @PutMapping("api/user/{userName}/address/geo")
     public ResponseEntity<?> setGeoCoordinatesForUser(@ApiParam("Valid user username") @PathVariable String userName,
-            @ApiParam("Valid Geo object") @RequestBody Geo geo) {
+            @ApiParam("Valid Geo object") @RequestBody AddGeoRequest geo) {
         usersService.addGeoToUserAddress(userName, geo);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -92,7 +82,7 @@ public class UsersController {
             @ApiResponse(code = 404, message = "If provided user name not exists") })
     @PutMapping("api/user/{userName}/company")
     public ResponseEntity<?> addCompanyToUser(@ApiParam("Valid user user name") @PathVariable String userName,
-            @ApiParam("Valid company object") @RequestBody Company company) {
+            @ApiParam("Valid company object") @RequestBody AddCompanyRequest company) {
         usersService.addCompanyToUser(userName, company);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

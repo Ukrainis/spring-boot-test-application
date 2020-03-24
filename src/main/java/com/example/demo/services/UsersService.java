@@ -5,9 +5,8 @@ import java.util.List;
 import com.example.demo.entities.*;
 import com.example.demo.exceptions.*;
 import com.example.demo.helpers.*;
-import com.example.demo.repositories.TodoRepository;
-import com.example.demo.repositories.UserRepository;
-import com.example.demo.requests.CreateUserRequest;
+import com.example.demo.repositories.*;
+import com.example.demo.requests.*;
 import com.example.demo.responses.CreateUserResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,12 +72,14 @@ public class UsersService {
         userRepo.delete(user);
     }
 
-    public void addAddressToUser(String userName, Address address) {
-        if (addressService.isAddressInvalid(address)) {
+    public void addAddressToUser(String userName, AddAddressRequest newAddress) {
+        if (addressService.isAddressInvalid(newAddress)) {
             throw new InvalidAddressDataException();
         }
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
+
+        Address address = addressService.makeAddress(newAddress);
 
         if(user.getAddress() == null){
             user.setAddress(address);
@@ -90,12 +91,14 @@ public class UsersService {
         userRepo.save(user);
     }
 
-    public void addGeoToUserAddress(String userName, Geo geo) {
-        if (geoService.isGeoInvalid(geo)) {
+    public void addGeoToUserAddress(String userName, AddGeoRequest newGeo) {
+        if (geoService.isGeoInvalid(newGeo)) {
             throw new InvaliGeoException();
         }
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
+
+        Geo geo = geoService.makeGeo(newGeo);
 
         if(user.getAddress() == null) {
             throw new MissingAddressException(userName);
@@ -109,12 +112,14 @@ public class UsersService {
         userRepo.save(user);
     }
 
-    public void addCompanyToUser(String userName, Company company) {
-        if (companyService.isCompanyInvalid(company)) {
+    public void addCompanyToUser(String userName, AddCompanyRequest newCompany) {
+        if (companyService.isCompanyInvalid(newCompany)) {
             throw new InvalidCompanyDataException();
         }
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
+
+        Company company = companyService.makeCompanyFromRequest(newCompany);
 
         if(user.getCompany() == null){
             user.setCompany(company);
@@ -129,6 +134,10 @@ public class UsersService {
     public void assignTodoToUser(String userName, Long todoId) {
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
         Todo todo = todoRepo.findById(todoId).orElseThrow(() -> new TodoNotFoundException(todoId));
+
+        if (user.getCompany() == null || user.getAddress() == null  || user.getAddress().getGeo() == null) {
+            throw new NotCompletedUserDataException(userName);
+        }
 
         todo.setUserId(user.getId());
         todoRepo.save(todo);

@@ -108,4 +108,12 @@ public class CustomExceptionsAdvice {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.WrongTodoStatusException, error);
     }
+
+    @ExceptionHandler(NotCompletedUserDataException.class)
+    @ResponseStatus(HttpStatus.FAILED_DEPENDENCY)
+    @ResponseBody
+    public CustomExceptionResponse notCompletedUserDataHandler(NotCompletedUserDataException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.NotCompletedUserDataException, error);
+    }
 }
