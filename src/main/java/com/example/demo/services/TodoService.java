@@ -36,7 +36,8 @@ public class TodoService {
 
     public void changeTodoStatus(Long todoId, TodoStatusChangeRequest newStatus) {
         String status = newStatus.getStatus();
-        if (Utils.isEmpty(status) || (!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status))) {
+        if (Utils.isEmpty(status) || 
+                (!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status)) && (!status.equals(TodoStatus.TODO.status))) {
             throw new InvalidTodoStatusException(status);
         }
 
