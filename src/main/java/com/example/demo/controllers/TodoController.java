@@ -9,12 +9,7 @@ import com.example.demo.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,8 +26,8 @@ public class TodoController {
 
     @ApiOperation(value = "Return all todo's")
     @GetMapping(path = "api/todos", produces = {"application/json", "application/xml"})
-    public ResponseEntity<List<Todo>> getAllTodos() {
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos());
+    public ResponseEntity<List<Todo>> getAllTodos(@ApiParam(required = false) @RequestParam(value = "status", required = false) String status) {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos(status));
     }
 
     @ApiOperation(value = "Create new todo")

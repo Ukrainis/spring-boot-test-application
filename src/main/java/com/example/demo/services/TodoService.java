@@ -7,6 +7,7 @@ import com.example.demo.helpers.Utils;
 import com.example.demo.repositories.TodoRepository;
 import com.example.demo.requests.TodoStatusChangeRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,16 @@ public class TodoService {
         this.todoRepository=todoRepository;
     }
 
-    public List<Todo> returnAllTodos() {
-        return todoRepository.findAll();
+    public List<Todo> returnAllTodos(String status) {
+        if (Utils.isEmpty(status)) {
+            return todoRepository.findAll();
+        }
+        if ((!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status)) && (!status.equals(TodoStatus.TODO.status))) {
+            return new ArrayList<Todo>();
+        }
+        
+        List<Todo> resultList = todoRepository.findByStatus(status);
+        return resultList;
     }
 
     public void addNewTodo(Todo todo) {
