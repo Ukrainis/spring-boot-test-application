@@ -116,4 +116,12 @@ public class CustomExceptionsAdvice {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.NotCompletedUserDataException, error);
     }
+
+    @ExceptionHandler(DublicatedTodoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse duplicatedTodoHandler(DublicatedTodoException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.DublicatedTodoException, error);
+    }
 }

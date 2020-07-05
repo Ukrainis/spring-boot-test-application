@@ -9,6 +9,8 @@ import com.example.demo.requests.TodoStatusChangeRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class TodoService {
         if (Utils.isEmpty(status)) {
             return todoRepository.findAll();
         }
-        if ((!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status)) && (!status.equals(TodoStatus.TODO.status))) {
+        if (isTodoStatusValid(status)) {
             return new ArrayList<Todo>();
         }
         
@@ -38,6 +40,12 @@ public class TodoService {
         if (isTodoInvalid(todo)) {
             throw new InvalidTodoException();
         }
+
+        Optional<Todo> todoActual = todoRepository.findByTitle(todo.getTitle());
+
+        if (todoActual.isPresent()) {
+            throw new DublicatedTodoException(todo.getTitle());
+        }
         todo.setStatus(TodoStatus.TODO);
 
         todoRepository.save(todo);
@@ -45,8 +53,7 @@ public class TodoService {
 
     public void changeTodoStatus(Long todoId, TodoStatusChangeRequest newStatus) {
         String status = newStatus.getStatus();
-        if (Utils.isEmpty(status) || 
-                (!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status)) && (!status.equals(TodoStatus.TODO.status))) {
+        if (Utils.isEmpty(status) || isTodoStatusValid(status)) {
             throw new InvalidTodoStatusException(status);
         }
 
@@ -78,5 +85,9 @@ public class TodoService {
 
     private Boolean isTodoInvalid(Todo todo) {
         return Utils.isEmpty(todo.getTitle());
+    }
+
+    private Boolean isTodoStatusValid(String status) {
+        return (!status.equals(TodoStatus.IN_PROGRESS.status)) && (!status.equals(TodoStatus.DONE.status)) && (!status.equals(TodoStatus.TODO.status));
     }
 }

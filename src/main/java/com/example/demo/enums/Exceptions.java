@@ -13,5 +13,6 @@ public enum Exceptions {
     InvalidTodoStatusException,
     TodoIsNotAssignedException,
     WrongTodoStatusException,
-    NotCompletedUserDataException;
+    NotCompletedUserDataException,
+    DublicatedTodoException;
 }
