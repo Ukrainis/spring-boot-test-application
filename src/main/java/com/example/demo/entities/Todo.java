@@ -3,7 +3,6 @@ package com.example.demo.entities;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.example.demo.converters.StatusConverter;
 import com.example.demo.enums.TodoStatus;
 
 import lombok.Data;
@@ -25,7 +24,7 @@ public class Todo {
     private String title;
 
     @Column(name = "todostatus")
-    @Convert(converter = StatusConverter.class)
+    @Enumerated(EnumType.STRING)
     private TodoStatus status;
 
     public Todo(String title){

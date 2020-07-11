@@ -6,13 +6,13 @@ import java.util.stream.*;
 
 import com.example.demo.enums.TodoStatus;
 
-@Converter(autoApply = true)
+//@Converter(autoApply = true)
 public class StatusConverter implements AttributeConverter<TodoStatus, String> {
 
     @Override
     public String convertToDatabaseColumn(TodoStatus status) {
         if (status == null) {
-            return null;
+            return TodoStatus.TODO.status;
         }
         return status.status;
     }
