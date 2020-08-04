@@ -36,10 +36,10 @@ Currently next api's present in this application:
 	3.1. Exceptions, that may occur:
 * ***UserNotFoundException*** - if incorrect "userName" provided.
 4. `/api/user/{userName}/company` - `PUT` request for adding/updating Company to user. Can be used JSON format(with default headers) and XML format(with headers: Accept application/xml).
-4.1. Exceptions, that may occur:
+	4.1. Exceptions, that may occur:
 * ***InvalidCompanyDataException*** - if any field is empty.
 * ***UserNotFoundException*** - if provided user not exist.
-4.2. Examples of requests:  
+	4.2. Examples of requests:  
 * JSON:
 ```json
 {
