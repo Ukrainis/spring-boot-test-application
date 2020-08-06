@@ -137,7 +137,7 @@ Currently next api's present in this application:
 </Todo>
 ```
 10. `/api/todos` - `GET` request for getting all todo's. Headers: depending on what you want to receive, for json - default _Accept application/json_, for xml - _Accept application/xml_.
-11. `/api/user/{userName}/todo/{todoId}` - `PUT` request for assigning TODO to User.
+11. `/api/user/{userName}/assignTodo/{todoId}` - `PUT` request for assigning TODO to User.
 
 	11.1. Exceptions, that may occur:
 * **404 code, UserNotFoundException** - if user with provided "userName" not exist.
