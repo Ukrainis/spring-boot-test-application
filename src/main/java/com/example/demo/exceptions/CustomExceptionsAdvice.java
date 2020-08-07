@@ -98,7 +98,7 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse invalidTodoStatusHandler(TodoIsNotAssignedException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(Exceptions.InvalidTodoStatusException, error);
+        return new CustomExceptionResponse(Exceptions.TodoIsNotAssignedException, error);
     }
 
     @ExceptionHandler(WrongTodoStatusException.class)
