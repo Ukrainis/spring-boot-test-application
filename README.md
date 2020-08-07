@@ -31,7 +31,7 @@ Currently next api's present in this application:
 </CreateUserRequest>
 ```
 
-3. `/api/user/{userName}` - `DELETE` request for removing user by it's userName. 
+3. `/api/user/{userName}/delete` - `DELETE` request for removing user by it's userName. 
 
 	3.1. Exceptions, that may occur:
 * ***UserNotFoundException*** - if incorrect "userName" provided.
