@@ -214,7 +214,7 @@ Currently next api's present in this application:
 13.`/api/authenticatedResource` `GET` request to get resource with authorization with token in headers.
 
  13.1. Required header: name: _Auth-Key_, value: _123456789_.
-
-14. `/api/basicAuthAuthenticatedResource`  `GET` request to get resource with Basic authorization.
+ 
+14.`/api/basicAuthAuthenticatedResource`  `GET` request to get resource with Basic authorization.
 
   14.1 Authentication data: username: _admin_, password: _password_.
