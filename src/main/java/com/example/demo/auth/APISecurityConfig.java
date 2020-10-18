@@ -16,7 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 @Configuration
 @EnableWebSecurity
 @PropertySource("classpath:application.properties")
-@Order(1)
+@Order(2)
 public class APISecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${sping-boot-test-aplication.http.auth-token-header-name}")
     private String principalRequestHeader;
