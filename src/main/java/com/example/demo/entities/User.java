@@ -14,11 +14,13 @@ import com.example.demo.requests.CreateUserRequest;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlRootElement
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue
@@ -53,8 +55,5 @@ public class User {
         this.email = request.getEmail();
         this.phone = request.getPhone();
         this.website = request.getWebsite();
-    }
-
-    public User() {
     }
 }

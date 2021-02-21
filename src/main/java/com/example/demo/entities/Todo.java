@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.example.demo.enums.TodoStatus;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlRootElement
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "todos")
 public class Todo {
@@ -30,7 +32,4 @@ public class Todo {
     public Todo(String title){
         this.title=title;
     }
-
-    public Todo(){}
-
 }

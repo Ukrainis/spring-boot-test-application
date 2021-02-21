@@ -15,9 +15,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlRootElement
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "companies")
 public class Company{
@@ -43,6 +45,4 @@ public class Company{
         this.catchPhrase = catchPhrase;
         this.bs = bs;
     }
-
-    public Company(){}
 }

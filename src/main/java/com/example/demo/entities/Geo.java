@@ -13,9 +13,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlRootElement
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "geos")
 public class Geo{
@@ -37,6 +39,4 @@ public class Geo{
         this.lat = lat;
         this.lng = lng;
     }
-
-    public Geo(){}
 }

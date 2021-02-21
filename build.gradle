@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    lombokVersion = '1.18.10'
+    lombokVersion = '1.18.18'
 	swaggerVersion = '2.9.2'
 	xmlSupportVersion = '2.10.2'
 }
@@ -12,8 +12,8 @@ ext {
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    baseName = 'spring-boot-test-app'
-    version =  '0.1.0'
+	archiveFileName = 'spring-boot-test-app'
+	archiveVersion = '0.1.0'
 }
 
 group = 'com.example'

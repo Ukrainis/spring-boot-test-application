@@ -14,9 +14,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlRootElement
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "addresses")
 public class Address{
@@ -49,6 +51,4 @@ public class Address{
         this.city = city;
         this.zipcode = zipCode;
     }
-
-    public Address(){}
 }

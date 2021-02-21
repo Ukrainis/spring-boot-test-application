@@ -122,6 +122,30 @@ public class CustomExceptionsAdvice {
     @ResponseBody
     public CustomExceptionResponse duplicatedTodoHandler(DublicatedTodoException ex) {
         String error = ex.getMessage();
-        return new CustomExceptionResponse(Exceptions.DublicatedTodoException, error);
+        return new CustomExceptionResponse(Exceptions.DuplicatedTodoException, error);
+    }
+
+    @ExceptionHandler(EmptyFileException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse emptyFileHandler(EmptyFileException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.EmptyFileException, error);
+    }
+
+    @ExceptionHandler(WrongFileExtensionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse wrongFileExtensionHandler(WrongFileExtensionException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.WrongFileExtensionException, error);
+    }
+
+    @ExceptionHandler(TooBigFileException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse tooBigFileExtensionHandler(TooBigFileException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.TooBifFileException, error);
     }
 }

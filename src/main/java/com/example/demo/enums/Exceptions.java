@@ -1,5 +1,7 @@
 package com.example.demo.enums;
 
+import com.example.demo.exceptions.EmptyFileException;
+
 public enum Exceptions {
     DublicateUserNameException, 
     InvalidAddressDataException, 
@@ -14,5 +16,8 @@ public enum Exceptions {
     TodoIsNotAssignedException,
     WrongTodoStatusException,
     NotCompletedUserDataException,
-    DublicatedTodoException;
+    DuplicatedTodoException,
+    EmptyFileException,
+    WrongFileExtensionException,
+    TooBifFileException;
 }
