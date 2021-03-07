@@ -24,16 +24,8 @@ public class TodoService {
         this.todoRepository=todoRepository;
     }
 
-    public List<Todo> returnAllTodos(String status) {
-        if (Utils.isEmpty(status)) {
-            return todoRepository.findAll();
-        }
-        if (isTodoStatusValid(status)) {
-            return new ArrayList<Todo>();
-        }
-        
-        List<Todo> resultList = todoRepository.findByStatus(status);
-        return resultList;
+    public List<Todo> returnAllTodos() {
+        return todoRepository.findAll();
     }
 
     public void addNewTodo(Todo todo) {

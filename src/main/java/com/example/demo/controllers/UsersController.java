@@ -1,8 +1,12 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.demo.auth.UserPrincipal;
 import com.example.demo.entities.*;
+import com.example.demo.exceptions.InvalidUserTokenException;
+import com.example.demo.exceptions.TokenNotFoundException;
 import com.example.demo.requests.*;
 import com.example.demo.responses.*;
 import com.example.demo.services.*;
@@ -17,12 +21,19 @@ import io.swagger.annotations.*;
 @RestController
 public class UsersController {
 
-    private final UsersService usersService;
+    @Autowired
+    private UsersService usersService;
 
     @Autowired
+    private TodoService todoService;
+
+    @Autowired
+    private JWTTokenService jwtTokenService;
+
+    /*@Autowired
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
-    }
+    }*/
 
     @ApiOperation(value = "Return all existing users")
     @ApiResponse(code = 200, message = "All existing users")
@@ -113,5 +124,23 @@ public class UsersController {
     public ResponseEntity<?> removeUser(@PathVariable String userName) {
         usersService.removeUserByUseName(userName);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ApiOperation(value = "Get user's todos")
+    @GetMapping("api/user/{userName}/todos")
+    public ResponseEntity<List<Todo>> getUserWithTodos(
+            @ApiParam(required = true) @PathVariable String userName,
+            @ApiParam(required = false) @RequestHeader("Authorization") String jwtToken) {
+        if (jwtToken == null)
+            throw new TokenNotFoundException();
+
+        UserPrincipal userPrincipal = jwtTokenService.parseToken(jwtToken);
+        if (!userPrincipal.getUserName().equalsIgnoreCase(userName))
+            throw new InvalidUserTokenException();
+
+        User user = usersService.returnUserByUserName(userName);
+        List<Todo> list = todoService.returnAllTodos()
+                .stream().filter(todo -> (todo.getUserId() != null && todo.getUserId() == user.getId())).collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 }

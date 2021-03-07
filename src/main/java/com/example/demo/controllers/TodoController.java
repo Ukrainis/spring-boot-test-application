@@ -27,8 +27,8 @@ public class TodoController {
 
     @ApiOperation(value = "Return all todo's")
     @GetMapping(path = "api/todos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<Todo>> getAllTodos(@ApiParam(required = false) @RequestParam(value = "status", required = false) String status) {
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos(status));
+    public ResponseEntity<List<Todo>> getAllTodos() {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos());
     }
 
     @ApiOperation(value = "Create new todo")

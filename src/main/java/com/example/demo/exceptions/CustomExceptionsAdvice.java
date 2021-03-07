@@ -144,8 +144,32 @@ public class CustomExceptionsAdvice {
     @ExceptionHandler(TooBigFileException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public CustomExceptionResponse tooBigFileExtensionHandler(TooBigFileException ex) {
+    public CustomExceptionResponse tooBigFileExceptionHandler(TooBigFileException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.TooBifFileException, error);
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public CustomExceptionResponse tokenNotFoundExceptionHandler(TokenNotFoundException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.TokenNotFoundException, error);
+    }
+
+    @ExceptionHandler(InvalidUserTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public CustomExceptionResponse invalidUserTokenExceptionHandler(InvalidUserTokenException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidUserTokenException, error);
+    }
+
+    @ExceptionHandler(InvalidJwtTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CustomExceptionResponse invalidJwtTokenExceptionHandler(InvalidJwtTokenException ex) {
+        String error = ex.getMessage();
+        return new CustomExceptionResponse(Exceptions.InvalidJwtTokenException, error);
     }
 }

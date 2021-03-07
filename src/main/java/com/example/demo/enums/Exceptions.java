@@ -1,7 +1,5 @@
 package com.example.demo.enums;
 
-import com.example.demo.exceptions.EmptyFileException;
-
 public enum Exceptions {
     DublicateUserNameException, 
     InvalidAddressDataException, 
@@ -19,5 +17,8 @@ public enum Exceptions {
     DuplicatedTodoException,
     EmptyFileException,
     WrongFileExtensionException,
-    TooBifFileException;
+    TooBifFileException,
+    TokenNotFoundException,
+    InvalidUserTokenException,
+    InvalidJwtTokenException;
 }
