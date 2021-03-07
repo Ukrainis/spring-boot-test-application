@@ -12,8 +12,8 @@ ext {
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-	archiveFileName = 'spring-boot-test-app'
-	archiveVersion = '0.1.0'
+	baseName = 'spring-boot-test-app'
+	version =  '0.1.0'
 }
 
 group = 'com.example'
