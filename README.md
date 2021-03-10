@@ -218,3 +218,13 @@ Currently next api's present in this application:
 * **400 code, EmptyFileException** - if provided file is empty.
 * **400 code, TooBigFileException** - if provided file size is more than 5000 bytes.
 * **400 code, WrongFileExtensionException** - if provided file has other than **.txt** extension.
+
+18. `/api/token/{userName}/generateToken` **200 code**, `GET` request to get authorization token for user.
+18.1. Exceptions that may occur:
+* **404 code, UserNotFound** - if provided userName doesn't belong to any existing users.
+
+19. `api/user/{userName}/todos` **200 code**, `GET` request to get todo's, assigned to current user. Require Bearer token in headers, which can be generated, using previous request.
+19.1. Exceptions, that may occur:
+* **400 code** - if no Authorization header is provided.
+* **400 code, InvalidJwtTokenProvided** - if empty Authorization header is provided.
+* **401 code, InvalidUserTokenException** - if token is generated to different user.
