@@ -61,7 +61,7 @@ public class UsersController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User is created", response = CreateUserResponse.class),
             @ApiResponse(code = 400, message = "If invalid User provided or user with this username already exists")})
     @ApiOperation(value = "Add a new user")
-    @PostMapping(path = "api/createUserPost", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE}/*"application/json", "application/xml", "application/x-www-form-urlencoded;charset=UTF-8"}*/, produces = {"application/json", "application/xml"})
+    @PostMapping(path = "api/user/createUserPost", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE}/*"application/json", "application/xml", "application/x-www-form-urlencoded;charset=UTF-8"}*/, produces = {"application/json", "application/xml"})
     public ResponseEntity<CreateUserResponse> createNewUser(@ApiParam("Valid user data") @RequestBody CreateUserRequest newUser) {
         CreateUserResponse response = usersService.addNewUser(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -70,7 +70,7 @@ public class UsersController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User is created", response = CreateUserResponse.class),
             @ApiResponse(code = 400, message = "If invalid User provided or user with this username already exists")})
     @ApiOperation(value = "Add a new user")
-    @PostMapping(path = "api/createUserUrl", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(path = "api/user/createUserUrl", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<CreateUserResponse> createNewUserUsingUrlEncoded(CreateUserRequest newUser) {
         CreateUserResponse response = usersService.addNewUser(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
