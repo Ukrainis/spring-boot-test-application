@@ -5,7 +5,7 @@ It's base url is: <https://spring-boot-test-aplication.herokuapp.com/>
 Currently next api's present in this application:  
 
 1. `/api/users` - **200 code**, `GET` request to get all users data, which currently present in DB. Headers: depending on what you want to receive, for json - default _Accept application/json_, for xml - _Accept application/xml_.
-2. `/api/createUserPost` - **201 code**, `POST` request for adding a new user. Can be used JSON format(with default _Accept application/json_ headers) and XML format(with headers: _Accept application/xml_).  
+2. `/api/users/createUserPost` - **201 code**, `POST` request for adding a new user. Can be used JSON format(with default _Accept application/json_ headers) and XML format(with headers: _Accept application/xml_).  
 
 2.1. Exceptions, that may occur:
 
