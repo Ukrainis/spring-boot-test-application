@@ -3,9 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.exceptions.EmptyFileException;
 import com.example.demo.exceptions.TooBigFileException;
 import com.example.demo.exceptions.WrongFileExtensionException;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,22 +21,23 @@ import java.io.IOException;
 @RestController
 public class FileUploadController {
 
-    @ApiOperation("File upload endpoint.")
-    @ApiResponses(value = {@ApiResponse(code = 400, message = "If file is empty, of more then 5000 bytes or has other extension then .txt"),
-            @ApiResponse(code = 200, message = "If correct .txt file is sent")})
-    @PostMapping(path = "/api/fileUpload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.TEXT_PLAIN_VALUE})
+    @Operation(summary = "File upload endpoint.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "If file is empty, of more then 5000 bytes or has other extension then .txt"),
+            @ApiResponse(responseCode = "200", description = "If correct .txt file is sent")})
+    @PostMapping(path = "/api/fileUpload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> fileUploadHandler(@RequestParam("file") MultipartFile file) throws IOException {
         log.info("File size: " + file.getSize());
         if (file.isEmpty()) {
             throw new EmptyFileException();
         }
-        if (file.getSize() > 5000) {
-            throw new TooBigFileException();
-        }
         String filename = file.getOriginalFilename();
         log.info("File name: " + filename);
-        if (!filename.endsWith(".txt")) {
+        String fileExtension = filename.split("\\.")[1];
+        if (!fileExtension.equals("txt")) {
             throw new WrongFileExtensionException();
+        }
+        if (file.getSize() > 5000) {
+            throw new TooBigFileException();
         }
         String fileContain = new String(file.getBytes());
         return ResponseEntity.status(HttpStatus.OK).body(fileContain);

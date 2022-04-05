@@ -1,27 +1,33 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-}
-
-ext {
-    lombokVersion = '1.18.18'
-	swaggerVersion = '2.9.2'
-	xmlSupportVersion = '2.10.2'
-}
-
-apply plugin: 'io.spring.dependency-management'
-
-bootJar {
-	baseName = 'spring-boot-test-app'
-	version =  '0.1.0'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
+}
+
+ext {
+    lombokVersion = '1.18.22'
+	swaggerVersion = '1.6.6'
+	xmlSupportVersion = '2.13.2'
+}
+
+
+bootJar {
+	baseName = 'spring-boot-test-app'
+	version =  '0.1.0'
 }
 
 dependencies {
@@ -31,12 +37,19 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
-	compile "io.springfox:springfox-swagger2:${swaggerVersion}"
-	compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
 	compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${xmlSupportVersion}"
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation "org.springdoc:springdoc-openapi-ui:${swaggerVersion}"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
 }

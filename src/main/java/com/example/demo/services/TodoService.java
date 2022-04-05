@@ -7,7 +7,6 @@ import com.example.demo.helpers.Utils;
 import com.example.demo.repositories.TodoRepository;
 import com.example.demo.requests.TodoStatusChangeRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +35,7 @@ public class TodoService {
         Optional<Todo> todoActual = todoRepository.findByTitle(todo.getTitle());
 
         if (todoActual.isPresent()) {
-            throw new DublicatedTodoException(todo.getTitle());
+            throw new DuplicatedTodoException(todo.getTitle());
         }
         todo.setStatus(TodoStatus.TODO);
 

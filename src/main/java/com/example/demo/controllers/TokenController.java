@@ -3,8 +3,8 @@ package com.example.demo.controllers;
 import com.example.demo.entities.User;
 import com.example.demo.services.JWTTokenService;
 import com.example.demo.services.UsersService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,10 @@ public class TokenController {
     @Autowired
     UsersService usersService;
 
-    @ApiOperation("Get jwt token for user")
+    @Operation(description = "Get jwt token for user")
     @GetMapping(path = "/api/token/{userName}/generateToken", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> generateJwtTokenForUser(@ApiParam(required = true) @PathVariable String userName) {
+    public ResponseEntity<String> generateJwtTokenForUser(
+            @Parameter(required = true) @PathVariable String userName) {
         User foundUser = usersService.returnUserByUserName(userName);
         String jwtToken = jwtTokenService.generateToken(foundUser);
         return ResponseEntity.status(HttpStatus.OK).body(jwtToken);

@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +27,7 @@ public class Company{
     @JsonIgnore
     private long id;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "userId", nullable = false)
     @JsonBackReference

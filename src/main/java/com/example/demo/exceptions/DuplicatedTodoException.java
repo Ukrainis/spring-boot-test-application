@@ -1,10 +1,10 @@
 package com.example.demo.exceptions;
 
-public class DublicatedTodoException extends RuntimeException{
+public class DuplicatedTodoException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
-    public DublicatedTodoException(String todoTitle) {
+    public DuplicatedTodoException(String todoTitle) {
         super("This todo already exists: " + todoTitle);
     }    
 }

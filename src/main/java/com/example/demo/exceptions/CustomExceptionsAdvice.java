@@ -61,10 +61,10 @@ public class CustomExceptionsAdvice {
         return new CustomExceptionResponse(Exceptions.InvalidGeoDataException, error);
     }
 
-    @ExceptionHandler(DublicateUserNameException.class)
+    @ExceptionHandler(DuplicatedUserNameException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public CustomExceptionResponse dublicatedUserNameHandler(DublicateUserNameException ex) {
+    public CustomExceptionResponse dublicatedUserNameHandler(DuplicatedUserNameException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.DublicateUserNameException, error);
     }
@@ -117,10 +117,10 @@ public class CustomExceptionsAdvice {
         return new CustomExceptionResponse(Exceptions.NotCompletedUserDataException, error);
     }
 
-    @ExceptionHandler(DublicatedTodoException.class)
+    @ExceptionHandler(DuplicatedTodoException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public CustomExceptionResponse duplicatedTodoHandler(DublicatedTodoException ex) {
+    public CustomExceptionResponse duplicatedTodoHandler(DuplicatedTodoException ex) {
         String error = ex.getMessage();
         return new CustomExceptionResponse(Exceptions.DuplicatedTodoException, error);
     }

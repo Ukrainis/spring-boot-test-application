@@ -54,7 +54,7 @@ public class UsersService {
 
         String userName = request.getUserName();
         if(userRepo.findByUserName(userName).isPresent()) {
-            throw new DublicateUserNameException(userName);
+            throw new DuplicatedUserNameException(userName);
         }
 
         User user = new User(request);
