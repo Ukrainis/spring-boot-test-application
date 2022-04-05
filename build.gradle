@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 }
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+//group = 'com.example'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -26,8 +26,17 @@ ext {
 
 
 bootJar {
-	baseName = 'spring-boot-test-app'
-	version =  '0.1.0'
+
+	baseName('spring-boot-test-app')
+	version('0.1.0')
+}
+
+jar {
+	enabled(false)
+}
+
+springBoot {
+	mainClass = 'com.example.demo.DemoApplication'
 }
 
 dependencies {
