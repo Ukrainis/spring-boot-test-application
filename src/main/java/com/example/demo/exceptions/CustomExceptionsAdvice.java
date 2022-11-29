@@ -2,7 +2,12 @@ package com.example.demo.exceptions;
 
 import com.example.demo.enums.Exceptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,12 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomExceptionsAdvice {
 
-    @ExceptionHandler(InvalidUserDataException.class)
+    /*
+     * @ExceptionHandler(InvalidUserDataException.class)
+     * 
+     * @ResponseStatus(HttpStatus.BAD_REQUEST)
+     * 
+     * @ResponseBody
+     * public CustomExceptionResponse invalidUserHandler(InvalidUserDataException
+     * ex) {
+     * String error = ex.getMessage();
+     * return new CustomExceptionResponse(Exceptions.InvalidUserDataException,
+     * error);
+     * }
+     */
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public CustomExceptionResponse invalidUserHandler(InvalidUserDataException ex) {
-        String error = ex.getMessage();
-        return new CustomExceptionResponse(Exceptions.InvalidUserDataException, error);
+    public CustomExceptionResponse invalidUserHandler2(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            FieldError fError = (FieldError) error;
+            String fieldName = fError.getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new CustomExceptionResponse(Exceptions.InvalidUserDataException, errors);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
