@@ -6,24 +6,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.example.demo.enums.Exceptions;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @XmlRootElement
 @Data
+@AllArgsConstructor
 public class CustomExceptionResponse {
 	private Exceptions exception;
 
 	private String message;
 
-	private Map<String, String> messages;
-
-	public CustomExceptionResponse(Exceptions exception, String message) {
-		this.exception = exception;
-		this.message = message;
-	}
-
-	public CustomExceptionResponse(Exceptions exception, Map<String, String> message) {
-		this.exception = exception;
-		this.messages = message;
-	}
+	private Map<String, String> errors;
 }
