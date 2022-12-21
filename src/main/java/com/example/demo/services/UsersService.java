@@ -69,9 +69,11 @@ public class UsersService {
     }
 
     public void addAddressToUser(String userName, AddAddressRequest newAddress) {
-        if (addressService.isAddressInvalid(newAddress)) {
-            throw new InvalidAddressDataException();
-        }
+        /*
+         * if (addressService.isAddressInvalid(newAddress)) {
+         * throw new InvalidAddressDataException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
@@ -88,9 +90,11 @@ public class UsersService {
     }
 
     public void addGeoToUserAddress(String userName, AddGeoRequest newGeo) {
-        if (geoService.isGeoInvalid(newGeo)) {
-            throw new InvaliGeoException();
-        }
+        /*
+         * if (geoService.isGeoInvalid(newGeo)) {
+         * throw new InvaliGeoException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
@@ -109,9 +113,11 @@ public class UsersService {
     }
 
     public void addCompanyToUser(String userName, AddCompanyRequest newCompany) {
-        if (companyService.isCompanyInvalid(newCompany)) {
-            throw new InvalidCompanyDataException();
-        }
+        /*
+         * if (companyService.isCompanyInvalid(newCompany)) {
+         * throw new InvalidCompanyDataException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 

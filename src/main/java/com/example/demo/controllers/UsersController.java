@@ -94,7 +94,7 @@ public class UsersController {
         @PostMapping(path = "api/user/createUserUrl", consumes = {
                         MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
                                         MediaType.APPLICATION_XML_VALUE })
-        public ResponseEntity<CreateUserResponse> createNewUserUsingUrlEncoded(CreateUserRequest newUser) {
+        public ResponseEntity<CreateUserResponse> createNewUserUsingUrlEncoded(@Valid CreateUserRequest newUser) {
                 CreateUserResponse response = usersService.addNewUser(newUser);
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -103,7 +103,7 @@ public class UsersController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "204", description = "If valid address and valid user"),
                         @ApiResponse(responseCode = "400", description = "If invalid address provided", content = {
-                                        @Content(schema = @Schema(implementation = InvalidAddressDataException.class)) }),
+                                        @Content(schema = @Schema(implementation = CustomExceptionResponse.class)) }),
                         @ApiResponse(responseCode = "404", description = "If provided user name not exists", content = {
                                         @Content(schema = @Schema(implementation = UserNotFoundException.class)) })
         })
@@ -111,7 +111,7 @@ public class UsersController {
                         MediaType.APPLICATION_XML_VALUE })
         public ResponseEntity<?> addAddressToUser(
                         @Parameter(description = "Valid user user name") @PathVariable String userName,
-                        @Parameter(description = "Valid address object") @RequestBody AddAddressRequest address) {
+                        @Parameter(description = "Valid address object") @RequestBody @Valid AddAddressRequest address) {
                 usersService.addAddressToUser(userName, address);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -127,7 +127,7 @@ public class UsersController {
                         MediaType.APPLICATION_XML_VALUE })
         public ResponseEntity<?> setGeoCoordinatesForUser(
                         @Parameter(description = "Valid user username") @PathVariable String userName,
-                        @Parameter(description = "Valid Geo object") @RequestBody AddGeoRequest geo) {
+                        @Parameter(description = "Valid Geo object") @RequestBody @Valid AddGeoRequest geo) {
                 usersService.addGeoToUserAddress(userName, geo);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -136,7 +136,7 @@ public class UsersController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "204", description = "If valid company and valid user"),
                         @ApiResponse(responseCode = "400", description = "If invalid company provided", content = {
-                                        @Content(schema = @Schema(implementation = InvalidCompanyDataException.class)) }),
+                                        @Content(schema = @Schema(implementation = CustomExceptionResponse.class)) }),
                         @ApiResponse(responseCode = "404", description = "If provided user name not exists", content = {
                                         @Content(schema = @Schema(implementation = UserNotFoundException.class)) })
         })
@@ -144,7 +144,7 @@ public class UsersController {
                         MediaType.APPLICATION_XML_VALUE })
         public ResponseEntity<?> addCompanyToUser(
                         @Parameter(description = "Valid user user name") @PathVariable String userName,
-                        @Parameter(description = "Valid company object") @RequestBody AddCompanyRequest company) {
+                        @Parameter(description = "Valid company object") @RequestBody @Valid AddCompanyRequest company) {
                 usersService.addCompanyToUser(userName, company);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
