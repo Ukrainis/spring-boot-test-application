@@ -26,6 +26,7 @@ public class CreateUserRequest {
     @Email(message = "The email of the user should be correct")
     private String email;
 
+    @NotEmpty(message = "The phone of the user shouldn't be empty.")
     @Pattern(regexp = "^(\\+|00)37(06\\d{7}|12\\d{7})$", message = "Allowed only Latvian and Lithuanian numbers.")
     private String phone;
 
