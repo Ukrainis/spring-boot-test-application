@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,8 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "geos")
-public class Geo{
-    @Id    
+public class Geo {
+    @Id
     @GeneratedValue
     @JsonIgnore
     private long id;
@@ -31,11 +32,13 @@ public class Geo{
     @JsonBackReference
     private Address address;
 
+    @Column(length = 10)
     private String lat;
-    
+
+    @Column(length = 10)
     private String lng;
 
-    public Geo(String lat, String lng){
+    public Geo(String lat, String lng) {
         this.lat = lat;
         this.lng = lng;
     }

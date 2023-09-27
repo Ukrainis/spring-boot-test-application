@@ -26,23 +26,23 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 51)
     private String name;
 
-    @Column(name = "userName", nullable = false, unique = true)
+    @Column(name = "userName", nullable = false, unique = true, length = 21)
     private String userName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 31)
     private String email;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Address address;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = false, length = 16)
     private String phone;
 
-    @Column(name = "website", nullable = false)
+    @Column(name = "website", nullable = false, length = 31)
     private String website;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -22,11 +22,11 @@ public class UsersService {
     private final TodoRepository todoRepo;
 
     @Autowired
-    public UsersService(UserRepository userRepository, CompanyService companyService, 
-                        AddressService addressService, GeoService geoService, TodoRepository todoRepo) {
+    public UsersService(UserRepository userRepository, CompanyService companyService,
+            AddressService addressService, GeoService geoService, TodoRepository todoRepo) {
         this.userRepo = userRepository;
         this.addressService = addressService;
-        this.geoService=geoService;
+        this.geoService = geoService;
         this.companyService = companyService;
         this.todoRepo = todoRepo;
     }
@@ -48,19 +48,15 @@ public class UsersService {
     }
 
     public CreateUserResponse addNewUser(CreateUserRequest request) {
-        if (isUserInvalid(request)) {
-            throw new InvalidUserDataException();
-        }
-
         String userName = request.getUserName();
-        if(userRepo.findByUserName(userName).isPresent()) {
+        if (userRepo.findByUserName(userName).isPresent()) {
             throw new DuplicatedUserNameException(userName);
         }
 
         User user = new User(request);
 
         User newUser = userRepo.save(user);
-        
+
         CreateUserResponse response = new CreateUserResponse(newUser);
 
         return response;
@@ -73,34 +69,38 @@ public class UsersService {
     }
 
     public void addAddressToUser(String userName, AddAddressRequest newAddress) {
-        if (addressService.isAddressInvalid(newAddress)) {
-            throw new InvalidAddressDataException();
-        }
+        /*
+         * if (addressService.isAddressInvalid(newAddress)) {
+         * throw new InvalidAddressDataException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
         Address address = addressService.makeAddress(newAddress);
 
-        if(user.getAddress() == null){
+        if (user.getAddress() == null) {
             user.setAddress(address);
             user.getAddress().setUser(user);
-        } else{
+        } else {
             user = addressService.updateUserAddress(user, address);
-        }              
+        }
 
         userRepo.save(user);
     }
 
     public void addGeoToUserAddress(String userName, AddGeoRequest newGeo) {
-        if (geoService.isGeoInvalid(newGeo)) {
-            throw new InvaliGeoException();
-        }
+        /*
+         * if (geoService.isGeoInvalid(newGeo)) {
+         * throw new InvaliGeoException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
         Geo geo = geoService.makeGeo(newGeo);
 
-        if(user.getAddress() == null) {
+        if (user.getAddress() == null) {
             throw new MissingAddressException(userName);
         } else if (user.getAddress().getGeo() == null) {
             geo.setAddress(user.getAddress());
@@ -113,18 +113,20 @@ public class UsersService {
     }
 
     public void addCompanyToUser(String userName, AddCompanyRequest newCompany) {
-        if (companyService.isCompanyInvalid(newCompany)) {
-            throw new InvalidCompanyDataException();
-        }
+        /*
+         * if (companyService.isCompanyInvalid(newCompany)) {
+         * throw new InvalidCompanyDataException();
+         * }
+         */
 
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
 
         Company company = companyService.makeCompanyFromRequest(newCompany);
 
-        if(user.getCompany() == null){
+        if (user.getCompany() == null) {
             user.setCompany(company);
             user.getCompany().setUser(user);
-        } else{
+        } else {
             user = companyService.updateUserCompany(user, company);
         }
 
@@ -135,7 +137,7 @@ public class UsersService {
         User user = userRepo.findByUserName(userName).orElseThrow(() -> new UserNotFoundException(userName));
         Todo todo = todoRepo.findById(todoId).orElseThrow(() -> new TodoNotFoundException(todoId));
 
-        if (user.getCompany() == null || user.getAddress() == null  || user.getAddress().getGeo() == null) {
+        if (user.getCompany() == null || user.getAddress() == null || user.getAddress().getGeo() == null) {
             throw new NotCompletedUserDataException(userName);
         }
 
