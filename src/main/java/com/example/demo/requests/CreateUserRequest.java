@@ -30,6 +30,7 @@ public class CreateUserRequest {
     @Pattern(regexp = "^\+?(371|370)[\s\-]?(2\d{7}|6\d{7})$", message = "Allowed only Latvian and Lithuanian numbers.")
     private String phone;
 
+    @NotEmpty(message = "The website shouldn't be empty.")
     @Size(min = 5, max = 30, message = "Website length should be between 5 and 30")
     @Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9 @:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", message = "Website should be in correct format")
     private String website;
