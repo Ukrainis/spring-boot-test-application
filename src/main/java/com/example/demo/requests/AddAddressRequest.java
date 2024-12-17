@@ -24,8 +24,8 @@ public class AddAddressRequest {
 
     @NotEmpty(message = "The zipcode shouldn't be empty.")
     @Pattern.List({
-            @Pattern(regexp = "^(LV-)[0-9]{4}$"),
-            @Pattern(regexp = "^(LT-)[0-9]{5}$")
+            @Pattern(regexp = "^(LV-)[0-9]{4}$", message = "ZipCode should be in correct Latvian/Lithuanian format"),
+            @Pattern(regexp = "^(LT-)[0-9]{5}$", message = "ZipCode should be in correct Latvian/Lithuanian format")
     })
     private String zipcode;
 }
