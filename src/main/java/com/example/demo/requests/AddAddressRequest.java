@@ -15,7 +15,7 @@ public class AddAddressRequest {
     private String street;
 
     @NotEmpty(message = "The suite shouldn't be empty.")
-    @Size(min = 10, max = 30, message = "Suite length should be between 10 and 30 characters")
+    @Size(min = 1/*0*/, max = 30, message = "Suite length should be between 10 and 30 characters")
     private String suite;
 
     @NotEmpty(message = "The city shouldn't be empty.")
@@ -24,8 +24,9 @@ public class AddAddressRequest {
 
     @NotEmpty(message = "The zipcode shouldn't be empty.")
     @Pattern.List({
-            @Pattern(regexp = "^(LV-)[0-9]{4}$", message = "ZipCode should be in correct Latvian/Lithuanian format"),
-            @Pattern(regexp = "^(LT-)[0-9]{5}$", message = "ZipCode should be in correct Latvian/Lithuanian format")
-    })
+            /*@Pattern(regexp = "^(LV-)[0-9]{4}$", message = "ZipCode should be in correct Latvian/Lithuanian format"),
+            @Pattern(regexp = "^(LT-)[0-9]{5}$", message = "ZipCode should be in correct Latvian/Lithuanian format")*/
+            @Pattern(regexp = "^((LV-)\\d{4})|((LT-)\\d{5})$", message = "ZipCode should be in correct Latvian/Lithuanian format"),
+ })
     private String zipcode;
 }
