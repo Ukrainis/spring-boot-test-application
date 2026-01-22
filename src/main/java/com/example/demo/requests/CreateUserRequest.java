@@ -1,11 +1,10 @@
 package com.example.demo.requests;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 @XmlRootElement
@@ -27,7 +26,7 @@ public class CreateUserRequest {
     private String email;
 
     @NotEmpty(message = "The phone of the user shouldn't be empty.")
-    @Pattern(regexp = "^\+?(371|370)[\s\-]?(2\d{7}|6\d{7})$", message = "Allowed only Latvian and Lithuanian numbers.")
+    @Pattern(regexp = "^\\+?(371|370)[\\s\\-]?(2\\d{7}|6\\d{7})$", message = "Allowed only Latvian and Lithuanian numbers.")
     private String phone;
 
     @NotEmpty(message = "The website shouldn't be empty.")

@@ -45,10 +45,10 @@ public class JWTTokenService implements TokenService {
         Jws<Claims> jwsClaims = null;
         try {
             String token = jwtToken.split(" ")[1];
-            jwsClaims = Jwts.parserBuilder()
+            jwsClaims = Jwts.parser()
                     .setSigningKey(secretBytes)
                     .build()
-                    .parseClaimsJws(token);
+                    .parseSignedClaims(token);
         } catch (Exception e) {
             log.info("Invalid jwtToken provided.");
             throw new InvalidJwtTokenException();

@@ -1,9 +1,8 @@
 package com.example.demo.requests;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 @XmlRootElement

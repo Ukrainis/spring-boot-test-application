@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,12 +20,13 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 public class FileUploadController {
 
     @Operation(summary = "File upload endpoint.")
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "If file is empty, of more then 5000 bytes or has other extension then .txt"),
             @ApiResponse(responseCode = "200", description = "If correct .txt file is sent")})
-    @PostMapping(path = "/api/fileUpload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/fileUpload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> fileUploadHandler(@RequestParam("file") MultipartFile file) throws IOException {
         log.info("File size: " + file.getSize());
         if (file.isEmpty()) {

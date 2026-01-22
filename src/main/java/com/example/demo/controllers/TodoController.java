@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 public class TodoController {
 
     private final TodoService todoService;
@@ -24,20 +25,20 @@ public class TodoController {
     }
 
     @Operation(description = "Return all todo's")
-    @GetMapping(path = "api/todos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(path = "/todos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Todo>> getAllTodos() {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.returnAllTodos());
     }
 
     @Operation(description = "Create new todo")
-    @PostMapping(path = "api/todo", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(path = "/todo", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<?> addNewTodo(@RequestBody Todo todo) {
         todoService.addNewTodo(todo);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(description = "Change TODO status")
-    @PutMapping(path = "/api/todo/{todoId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PutMapping(path = "/todo/{todoId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<?> changeTodoStatus(/*ApiParam*/ @PathVariable Long todoId, /*@ApiParam*/ @RequestBody TodoStatusChangeRequest newStatus) {
         todoService.changeTodoStatus(todoId, newStatus);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

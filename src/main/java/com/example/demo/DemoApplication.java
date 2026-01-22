@@ -10,12 +10,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition(info = @Info(title = "Test api"))
 public class DemoApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		
-	}
+    @Override
+    public void run(String... args) throws Exception {
+
+    }
+
+    /*
+     * @Bean
+     * public ServletRegistrationBean h2servletRegistration() {
+     * ServletRegistrationBean registration = new ServletRegistrationBean(new
+     * WebServlet());
+     * registration.addUrlMappings("/console/*");
+     * return registration;
+     * }
+     */
 }

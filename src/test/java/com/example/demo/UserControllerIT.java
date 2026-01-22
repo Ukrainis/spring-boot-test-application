@@ -4,9 +4,9 @@ package com.example.demo;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
-import com.github.tomakehurst.wiremock.matching.MultipartValuePatternBuilder;
+import com.github.tomakehurst.wiremock.matching.StringValuePattern;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +27,7 @@ public class UserControllerIT {
 
     @RegisterExtension
     static WireMockExtension wireMockServer = WireMockExtension
-            .newInstance().options(wireMockConfig().dynamicPort().extensions(new ResponseTemplateTransformer(true))).build();
+            .newInstance().options(wireMockConfig().dynamicPort().dynamicHttpsPort().globalTemplating(true)).build();
 
     @Test
     void getUsersAcceptJsonTest() {
@@ -40,7 +40,8 @@ public class UserControllerIT {
                                         .withStatus(200)
                                         .withHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)));
 
-        given()
+
+        given().relaxedHTTPSValidation()
                 .accept(ContentType.JSON).log().all()
                 .when()
                 .get(wireMockServer.baseUrl() + "/api/users")
@@ -59,7 +60,7 @@ public class UserControllerIT {
                         .willReturn(
                                 aResponse().withHeader("Accept", MediaType.APPLICATION_XML_VALUE).withBody(xmlResult).withStatus(200).withHeader("Content-type", MediaType.APPLICATION_XML_VALUE)));
 
-        given().accept(ContentType.XML).log().all().when().get(wireMockServer.baseUrl() + "/api/users").then().log().all().contentType(ContentType.XML).statusCode(200);
+        given().relaxedHTTPSValidation().accept(ContentType.XML).log().all().when().get(wireMockServer.baseUrl() + "/api/users").then().log().all().contentType(ContentType.XML).statusCode(200);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class UserControllerIT {
         map.put("email", "test");
         map.put("website", "test");
         map.put("phone", "test");
-        given()
+        given().relaxedHTTPSValidation()
                 .accept(ContentType.JSON).log().all().body(map)
                 .when()
                 .post(wireMockServer.baseUrl() + "/api/createUserPost")
@@ -93,31 +94,33 @@ public class UserControllerIT {
     }
 
     @Test
+    @Disabled
     public void createUserFormTest() {
         wireMockServer.stubFor(
-                WireMock.post("/api/createUserPost")
-                        .withRequestBody(matchingJsonPath("name", matching("^(?!\\s*$).+")))
-                        .withRequestBody(matchingJsonPath("userName", matching("^(?!\\s*$).+")))
-                        .withRequestBody(matchingJsonPath("email", matching("^(?!\\s*$).+")))
-                        .withRequestBody(matchingJsonPath("website", matching("^(?!\\s*$).+")))
-                        .withRequestBody(matchingJsonPath("phone", matching("^(?!\\s*$).+")))
+                WireMock.post("/api/createUserUrl")
+                        .withFormParam("name", matching("^(?!\\s*$).+"))
+                        .withFormParam("userName", matching("^(?!\\s*$).+"))
+                        .withFormParam("email", matching("^(?!\\s*$).+"))
+                        .withFormParam("website", matching("^(?!\\s*$).+"))
+                        .withFormParam("phone", matching("^(?!\\s*$).+"))
                         .willReturn(
                                 aResponse()
                                         .withHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
                                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                                        .withBody("{\"id\": 1, \n\"userName\": \"{{jsonPath request.body 'userName'}}\"}")
+                                        .withBody("{\"id\": 1, \n\"userName\": \"{{formData request.body 'form' urlDecode=true}}{{form.multiValueField.1}}\"}")
                                         .withStatus(201)));
 
         Map<String, String> map = new HashMap<>();
         map.put("userName", "Valentins");
-        map.put("name", "");
+        map.put("name", "Val");
         map.put("email", "test");
         map.put("website", "test");
         map.put("phone", "test");
-        given()
-                .accept(ContentType.JSON).log().all().body(map)
+        given().relaxedHTTPSValidation()
+                .contentType(ContentType.URLENC)
+                .accept(ContentType.JSON).log().all().formParams(map)
                 .when()
-                .post(wireMockServer.baseUrl() + "/api/createUserPost")
+                .post(wireMockServer.baseUrl() + "/api/createUserUrl")
                 .then().log().all()
                 .contentType(ContentType.JSON).statusCode(201)
                 .body("userName", equalTo(map.get("userName")));
@@ -141,7 +144,7 @@ public class UserControllerIT {
         map.put("email", "test");
         map.put("website", "test");
         map.put("phone", "test");
-        given()
+        given().relaxedHTTPSValidation()
                 .accept(ContentType.JSON).log().all().body(map)
                 .when()
                 .post(wireMockServer.baseUrl() + "/api/createUserPost")

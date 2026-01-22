@@ -1,9 +1,8 @@
 package com.example.demo.responses;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.example.demo.entities.User;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 @XmlRootElement
