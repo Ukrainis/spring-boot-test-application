@@ -2,6 +2,7 @@ HELP.md
 .gradle
 /build/
 /bin/
+/target/
 !gradle/wrapper/gradle-wrapper.jar
 *.*.db
 
