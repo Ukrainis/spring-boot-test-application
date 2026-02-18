@@ -1,13 +1,17 @@
 package com.example.demo.requests;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
+@JacksonXmlRootElement(localName = "AddGeoRequest")
 @XmlRootElement
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AddGeoRequest {
 
     @NotEmpty(message = "The lattitude shouldn't be empty.")

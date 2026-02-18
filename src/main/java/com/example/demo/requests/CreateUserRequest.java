@@ -6,9 +6,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+@JacksonXmlRootElement(localName = "CreateUserRequest")
 @XmlRootElement
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {
 

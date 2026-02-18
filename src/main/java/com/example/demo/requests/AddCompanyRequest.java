@@ -1,14 +1,19 @@
 package com.example.demo.requests;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@JacksonXmlRootElement(localName = "AddCompanyRequest")
 @XmlRootElement
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AddCompanyRequest {
 
     @NotEmpty(message = "The name of the company shouldn't be empty.")

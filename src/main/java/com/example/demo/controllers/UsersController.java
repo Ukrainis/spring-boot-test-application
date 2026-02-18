@@ -92,9 +92,10 @@ public class UsersController {
                         @ApiResponse(responseCode = "400", description = "If invalid User provided or user with this username already exists") })
         @Operation(description = "Add a new user")
         @PostMapping(path = "/user/createUserUrl", consumes = {
-                        MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-                                        MediaType.APPLICATION_XML_VALUE })
-        public ResponseEntity<CreateUserResponse> createNewUserUsingUrlEncoded(@Valid CreateUserRequest newUser) {
+                        MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = {
+                                        MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+        public ResponseEntity<CreateUserResponse> createNewUserUsingUrlEncoded(
+                        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Valid user data", required = true, content = @Content(mediaType = MediaType.APPLICATION_FORM_URLENCODED_VALUE, schema = @Schema(implementation = CreateUserRequest.class))) @Valid @ModelAttribute CreateUserRequest newUser) {
                 CreateUserResponse response = usersService.addNewUser(newUser);
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
