@@ -1,7 +1,13 @@
 # Overview
 
-This is a Spring Boot application which was created as experiment application for API Test automation trainingg.  
-It's base url is: <https://spring-boot-test-aplication.herokuapp.com/>  
+This is a Spring Boot application which was created as experiment application for API Test automation training.  
+You can start it locally, using maven as a build tool. To do this, follow these steps:
+1. Clone repository.
+2. Enter into it or open with IDE as maven project and make clean install.
+3. Open DemoApplication.java class and run it as Spring Boot application.
+
+It's base url is: <http://localhost:8080>  
+Swagger url: http://localhost:8080/swagger-ui/index.html
 Currently next api's present in this application:  
 
 1. `/api/users` - **200 code**, `GET` request to get all users data, which currently present in DB. Headers: depending on what you want to receive, for json - default _Accept application/json_, for xml - _Accept application/xml_.
