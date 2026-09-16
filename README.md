@@ -8,6 +8,7 @@ You can start it locally, using maven as a build tool. To do this, follow these 
 
 It's base url is: <http://localhost:8080>  
 Swagger url: http://localhost:8080/swagger-ui/index.html
+
 Currently next api's present in this application:  
 
 1. `/api/users` - **200 code**, `GET` request to get all users data, which currently present in DB. Headers: depending on what you want to receive, for json - default _Accept application/json_, for xml - _Accept application/xml_.
